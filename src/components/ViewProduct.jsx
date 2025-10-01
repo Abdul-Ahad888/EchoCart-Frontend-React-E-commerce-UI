@@ -25,6 +25,8 @@ export default function ViewProduct() {
 
     const [wishlistToast, setWishlistToast] = useState(null)
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         if (product?.id) {
             const isFav = wishlist.some(item => item.productId === product.id);
@@ -35,6 +37,9 @@ export default function ViewProduct() {
 
 
     useEffect(() => {
+
+        setLoading(true)
+
         fetch(`https://echo-cart-back-end.vercel.app/api/v1/products/${id}`)
 
             .then((responce) => {
@@ -47,10 +52,12 @@ export default function ViewProduct() {
             .then((data) => {
                 setProduct(data)
                 setReview(data.reviews)
+                setLoading(false)
             })
 
             .catch((err) => {
                 setError(err.message)
+                setLoading(false)
             })
     }, [id])
 
@@ -280,6 +287,22 @@ export default function ViewProduct() {
 
     return (
         <>
+
+            {loading && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                    style={{ background: "rgba(255, 255, 255)", zIndex: "9999" }}
+                >
+                    <div
+                        className="spinner-border border-4"
+                        style={{ width: "7rem", height: "7rem", color: "#de7127" }}
+                        role="status"
+                    >
+                        <span className="visually-hidden"></span>
+                    </div>
+                </div>
+            )}
+
             {/* Toast When Product Add To Wishlist */}
             <div key={wishlistToast} style={{ bottom: "10px", right: "10px" }} className={`z-3 toast position-fixed align-items-center border-0 ${wishlistToast ? 'd-block wishlist-toast' : 'd-none wishlist-toast'}`} role="alert" aria-live="assertive" aria-atomic="true">
                 <div className="d-flex">

@@ -144,7 +144,6 @@ export default function CreateProduct() {
     });
 
     try {
-
       setLoading(true);
 
       const res = await fetch("https://echo-cart-back-end.vercel.app/api/v1/products", {
@@ -159,7 +158,7 @@ export default function CreateProduct() {
 
         setTimeout(() => {
           setMessageToast(false)
-          navigate('/admin/products')
+          navigate('/owner/products')
         }, 2000);
 
       } else {
@@ -213,7 +212,7 @@ export default function CreateProduct() {
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <Link
-                to="/admin/products"
+                to="/owner/products"
                 className="text-black text-decoration-none"
               >
                 Products

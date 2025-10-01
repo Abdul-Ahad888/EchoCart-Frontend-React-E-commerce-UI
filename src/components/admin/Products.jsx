@@ -8,6 +8,8 @@ export default function Products() {
 
   const [messageToast, setMessageToast] = useState(false)
 
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate()
 
   const token = localStorage.getItem("authToken");
@@ -39,6 +41,8 @@ export default function Products() {
 
   useEffect(() => {
     const getAllProducts = () => {
+      setLoading(true)
+
       fetch("https://echo-cart-back-end.vercel.app/api/v1/products", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,9 +56,11 @@ export default function Products() {
         })
         .then((data) => {
           setProducts(data.products);
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err);
+          setLoading(false)
         });
     };
 
@@ -81,6 +87,22 @@ export default function Products() {
 
   return (
     <>
+
+      {loading && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ background: "rgba(0,0,0,0.6)", zIndex: "9999" }}
+        >
+          <div
+            className="spinner-border"
+            style={{ width: "5rem", height: "5rem", color: "#de7127" }}
+            role="status"
+          >
+            <span className="visually-hidden"></span>
+          </div>
+        </div>
+      )}
+
       {messageToast && (
         <div role="alert" aria-live="assertive" aria-atomic="true" class="toast position-fixed d-block" style={{ bottom: "10px", right: "10px" }} data-bs-autohide="false">
           <div class="toast-header">

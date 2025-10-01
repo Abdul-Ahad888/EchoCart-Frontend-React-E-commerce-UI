@@ -184,10 +184,10 @@ export default function CreateProduct() {
           style={{ background: "rgba(0,0,0,0.6)", zIndex: "9999" }}
         >
           <div
-            className="spinner-border border-4"
-            style={{ width: "7rem", height: "7rem", color: "#de7127" }}
-            role="status"
-          >
+                        className="spinner-border"
+                        style={{ width: "5rem", height: "5rem", color: "#de7127" }}
+                        role="status"
+                    >
             <span className="visually-hidden">Creating Product...</span>
           </div>
         </div>

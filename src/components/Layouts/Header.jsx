@@ -221,7 +221,7 @@ export default function Header({ toggleCart }) {
                             {authStatus === "authenticated" && (
                                 <Link to='/profile/my-profile' className='text-black nav-bot-res text-decoration-none'>
                                     <div className='text-center'>
-                                        <img src={`http://localhost:8000/uploads/${profileImage}`} className='me-2' style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover" }}
+                                        <img src={profileImage} className='me-2' style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover" }}
                                             alt="" />
                                     </div>
                                 </Link>

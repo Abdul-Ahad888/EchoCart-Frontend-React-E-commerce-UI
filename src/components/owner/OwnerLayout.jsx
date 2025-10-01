@@ -112,12 +112,12 @@ export default function AdminLayout() {
                         </ul>
                     )}
 
-                    <li className={``}>
+                    {/* <li className={``}>
                         <Link to={'setting'}>
                             <i className="fa fa-cog"></i>
                             {!collapsed && <span>Settings</span>}
                         </Link>
-                    </li>
+                    </li> */}
                 </ul>
 
                 <ul className="menu bottom">

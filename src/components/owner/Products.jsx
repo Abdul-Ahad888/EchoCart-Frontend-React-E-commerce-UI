@@ -8,6 +8,8 @@ export default function Products() {
 
   const [messageToast, setMessageToast] = useState(false)
 
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate()
 
   const token = localStorage.getItem("authToken");
@@ -38,6 +40,7 @@ export default function Products() {
   };
 
   useEffect(() => {
+    setLoading(true)
     const getAllProducts = () => {
       fetch("https://echo-cart-back-end.vercel.app/api/v1/products", {
         headers: {
@@ -51,9 +54,11 @@ export default function Products() {
           return res.json();
         })
         .then((data) => {
+          setLoading(false)
           setProducts(data.products);
         })
         .catch((err) => {
+          setLoading(false)
           console.log(err);
         });
     };
@@ -81,6 +86,22 @@ export default function Products() {
 
   return (
     <>
+
+      {loading && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ background: "rgba(0,0,0,0.6)", zIndex: "9999" }}
+        >
+          <div
+            className="spinner-border"
+            style={{ width: "5rem", height: "5rem", color: "#de7127" }}
+            role="status"
+          >
+            <span className="visually-hidden"></span>
+          </div>
+        </div>
+      )}
+
       {messageToast && (
         <div role="alert" aria-live="assertive" aria-atomic="true" class="toast position-fixed d-block" style={{ bottom: "10px", right: "10px" }} data-bs-autohide="false">
           <div class="toast-header">
@@ -95,9 +116,9 @@ export default function Products() {
 
       <div className="products-container p-4">
         {/* Top Bar */}
-        <div className="products-header d-flex justify-content-between align-items-center mb-3">
+        <div className="products-header d-md-flex justify-content-between align-items-center mb-3">
           <h5 className="fw-semibold mb-0">Products</h5>
-          <div className="product-search-box">
+          <div className="product-search-box my-2 my-md-0">
             <i className="fas fa-search"></i>
             <input
               type="text"
@@ -176,7 +197,7 @@ export default function Products() {
                       <td className="discount-col">{productDiscount}</td>
                       <td className="price-col">${product.price}</td>
                       <td className="action-col">
-                        <i className="fa fa-pen-to-square" onClick={() => navigate(`/admin/products/edit-product/${product.id}`)}></i>
+                        <i className="fa fa-pen-to-square" onClick={() => navigate(`/owner/products/edit-product/${product.id}`)}></i>
                         <i className="fa fa-trash" onClick={() => handleDelete(product.id)}></i>
                       </td>
                     </tr>

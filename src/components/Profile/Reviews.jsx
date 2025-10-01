@@ -160,8 +160,8 @@ export default function Reviews() {
 
                     <div className="row profile-reviews">
                         {reviews.length === 0 ? (
-                            <div className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-                                <h3>No Reviews Yet</h3>
+                            <div className="d-flex justify-content-center align-items-center text-center" style={{ height: '80vh' }}>
+                                <h3>Your opinion matters — start the conversation!</h3>
                             </div>
                         ) : (
                             <>

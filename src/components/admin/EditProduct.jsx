@@ -29,7 +29,9 @@ export default function EditProduct() {
 
     const [messageToast, setMessageToast] = useState(false);
     const [errors, setErrors] = useState({});
+
     const [loading, setLoading] = useState(true);
+    const [productCreationloader, setProductCreationloader] = useState(false);
 
     const token = localStorage.getItem("authToken");
 
@@ -167,6 +169,8 @@ export default function EditProduct() {
         });
 
         try {
+            setProductCreationloader(true);
+
             const res = await fetch(`https://echo-cart-back-end.vercel.app/api/v1/products/${id}`, {
                 method: "PUT",
                 headers: { Authorization: `Bearer ${token}` },
@@ -186,6 +190,8 @@ export default function EditProduct() {
             }
         } catch (err) {
             console.error(err);
+        } finally {
+            setProductCreationloader(false);
         }
     };
 
@@ -202,6 +208,22 @@ export default function EditProduct() {
 
     return (
         <>
+
+            {productCreationloader && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                    style={{ background: "rgba(0,0,0,0.6)", zIndex: "9999" }}
+                >
+                    <div
+                        className="spinner-border"
+                        style={{ width: "5rem", height: "5rem", color: "#de7127" }}
+                        role="status"
+                    >
+                        <span className="visually-hidden">Updating Product...</span>
+                    </div>
+                </div>
+            )}
+
             {messageToast && (
                 <div
                     role="alert"
@@ -269,7 +291,7 @@ export default function EditProduct() {
                                         onClick={() => document.getElementById("thumbnailInput").click()}
                                     >
                                         {thumbnailPreview ? (
-                                            <img src={thumbnailPreview} alt="Thumbnail Preview" style={{ width: "100%", maxHeight: "278px", objectFit: "cover" }}/>
+                                            <img src={thumbnailPreview} alt="Thumbnail Preview" style={{ width: "100%", maxHeight: "278px", objectFit: "cover" }} />
                                         ) : (
                                             <span className="text-muted">Add Image</span>
                                         )}

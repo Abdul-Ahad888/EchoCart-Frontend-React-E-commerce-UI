@@ -52,8 +52,8 @@ export default function Wishlist() {
                 wishlist.length > 0 ? (
                   wishlist.map(item => {
 
-                    const discount = Math.floor(item.Product.discountPercentage);
-                    const discountedPrice = (item.Product.price - item.Product.price * discount / 100).toFixed(2)
+                    const discount = Math.floor(item.product.discountPercentage);
+                    const discountedPrice = (item.product.price - item.product.price * discount / 100).toFixed(2)
 
                     let display;
                     let discountDisplay;
@@ -75,12 +75,12 @@ export default function Wishlist() {
                         <div className="row">
                           <div className="col-6 my-2">
                             <div className="prod-img-container">
-                              <img className='prod-img' src={item.Product.thumbnail} alt={item.Product.title} />
+                              <img className='prod-img' src={item.product.thumbnail} alt={item.product.title} />
                             </div>
                           </div>
                           <div className="col-6 my-2 px-1 position-relative">
                             <div className="prod-wishlist">
-                              <p style={{ fontSize: "16px" }} className='fw-semibold truncate-2-lines'>{item.Product.title}</p>
+                              <p style={{ fontSize: "16px" }} className='fw-semibold truncate-2-lines'>{item.product.title}</p>
                               <div className='mt-4'>
                                 <small className='fw-semibold'>Added On :</small> <small className='float-end' style={{ position: "relative", top: "4px", fontSize: "12px" }}>
                                   {new Date(item.createdAt).toLocaleDateString("en-US", {
@@ -95,11 +95,11 @@ export default function Wishlist() {
                                 <div className='d-inline-block float-end'>
 
                                   <div style={{ display: actPriceDisplay }} className='no-discount'>
-                                    <small className='fw-semibold'>$ {item.Product.price}</small>
+                                    <small className='fw-semibold'>$ {item.product.price}</small>
                                   </div>
 
                                   <div style={{ display: discountDisplay }} className="discounted">
-                                    <small className='d-block text-decoration-line-through'>${item.Product.price}</small>
+                                    <small className='d-block text-decoration-line-through'>${item.product.price}</small>
                                     <small className='d-block fw-semibold'>${discountedPrice}</small>
                                   </div>
 
@@ -109,12 +109,12 @@ export default function Wishlist() {
                                 <small className='fw-semibold'>Discount :</small> <small className='float-end' style={{ position: "relative", top: "2px" }}>{discount}%</small>
                               </div>
                               <div className='mt-2'>
-                                <small className='fw-semibold'>Stock :</small> <small className='float-end' style={{ position: "relative", top: "2px" }}>{item.Product.stock}</small>
+                                <small className='fw-semibold'>Stock :</small> <small className='float-end' style={{ position: "relative", top: "2px" }}>{item.product.stock}</small>
                               </div>
 
                               <div className='position-absolute' style={{ bottom: "10px", width: "88%" }}>
                                 <div className="mt-5">
-                                  <button className='w-100 btn-theme-fill py-1 rounded rounded-3' onClick={() => addToCart(item.Product)}>Add To Cart</button>
+                                  <button className='w-100 btn-theme-fill py-1 rounded rounded-3' onClick={() => addToCart(item.product)}>Add To Cart</button>
                                 </div>
                                 <div className="d-flex justify-content-between align-items-center mt-2">
                                   <small style={{ fontSize: "11px" }}>

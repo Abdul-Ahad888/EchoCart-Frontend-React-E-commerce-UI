@@ -9,11 +9,15 @@ export default function Users() {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const token = localStorage.getItem('authToken')
 
     const getAllUsers = () => {
+      setLoading(true)
+
       fetch('https://echo-cart-back-end.vercel.app/api/v1/user/getUsers', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -26,9 +30,11 @@ export default function Users() {
           return res.json()
         })
         .then((data) => {
+          setLoading(false) 
           setUsers(data)
         })
         .catch((err) => {
+          setLoading(false)
           console.log(err)
         })
     }
@@ -97,6 +103,22 @@ export default function Users() {
 
   return (
     <>
+
+      {loading && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ background: "rgba(0,0,0,0.6)", zIndex: "9999" }}
+        >
+          <div
+            className="spinner-border"
+            style={{ width: "5rem", height: "5rem", color: "#de7127" }}
+            role="status"
+          >
+            <span className="visually-hidden"></span>
+          </div>
+        </div>
+      )}
+
 
       {showToast && (
         <div

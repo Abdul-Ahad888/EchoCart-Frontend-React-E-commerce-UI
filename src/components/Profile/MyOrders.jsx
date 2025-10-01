@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProfileSideBar from "./ProfileSideBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyOrders = () => {
     const [detailBox, setDetailBox] = useState(true);
@@ -9,6 +9,8 @@ const MyOrders = () => {
     const [copyTracking, setCopyTracking] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [orders, setOrders] = useState([]);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -56,8 +58,11 @@ const MyOrders = () => {
         } else { return }
     }
 
-    const trackingNumber = 247289472874
+    const handleNavigate = () => {
+        navigate('/')
+    } 
 
+    const trackingNumber = 247289472874
 
     return (
         <>
@@ -107,202 +112,209 @@ const MyOrders = () => {
                             <h2><Link to='/'>Home</Link> <i className='fa fa-chevron-right fs-5 mx-3'></i> <span className='text-muted'>My Orders</span></h2>
                         </div>
 
-                        <div className="my-orders">
-                            <div className="orders-tabs">
+                        {orders.length > 0 ? (
+                            <div className="my-orders">
+                                <div className="orders-tabs">
 
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                    <li class="nav-item my-1" role="presentation">
-                                        <button class="nav-link active" id="pills-all-orders-tab" data-bs-toggle="pill" data-bs-target="#pills-all-orders" type="button" role="tab" aria-controls="pills-all-orders" aria-selected="true">All Orders</button>
-                                    </li>
-                                    <li class="nav-item my-1" role="presentation">
-                                        <button class="nav-link" id="pills-delivered-tab" data-bs-toggle="pill" data-bs-target="#pills-delivered" type="button" role="tab" aria-controls="pills-delivered" aria-selected="false">Delivered</button>
-                                    </li>
-                                    <li class="nav-item my-1" role="presentation">
-                                        <button class="nav-link" id="pills-processing-tab" data-bs-toggle="pill" data-bs-target="#pills-processing" type="button" role="tab" aria-controls="pills-processing" aria-selected="false">Processing</button>
-                                    </li>
-                                    <li class="nav-item my-1" role="presentation">
-                                        <button class="nav-link" id="pills-cancel-tab" data-bs-toggle="pill" data-bs-target="#pills-cancel" type="button" role="tab" aria-controls="pills-cancel" aria-selected="false">Canceled</button>
-                                    </li>
-                                </ul>
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item my-1" role="presentation">
+                                            <button class="nav-link active" id="pills-all-orders-tab" data-bs-toggle="pill" data-bs-target="#pills-all-orders" type="button" role="tab" aria-controls="pills-all-orders" aria-selected="true">All Orders</button>
+                                        </li>
+                                        <li class="nav-item my-1" role="presentation">
+                                            <button class="nav-link" id="pills-delivered-tab" data-bs-toggle="pill" data-bs-target="#pills-delivered" type="button" role="tab" aria-controls="pills-delivered" aria-selected="false">Delivered</button>
+                                        </li>
+                                        <li class="nav-item my-1" role="presentation">
+                                            <button class="nav-link" id="pills-processing-tab" data-bs-toggle="pill" data-bs-target="#pills-processing" type="button" role="tab" aria-controls="pills-processing" aria-selected="false">Processing</button>
+                                        </li>
+                                        <li class="nav-item my-1" role="presentation">
+                                            <button class="nav-link" id="pills-cancel-tab" data-bs-toggle="pill" data-bs-target="#pills-cancel" type="button" role="tab" aria-controls="pills-cancel" aria-selected="false">Canceled</button>
+                                        </li>
+                                    </ul>
 
-                                <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-all-orders" role="tabpanel" aria-labelledby="pills-all-orders-tab" tabindex="0">
-                                        <div className="all-orders">
-                                            <div className="row">
-                                                {orders.map((order) => (
-                                                    <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
-                                                        <div className="all-order-container">
-                                                            <div className="fw-semibold order-number">
-                                                                {order.transactionId}
-                                                            </div>
-                                                            <div className="order-tracking">
-                                                                <span className='text-secondary fw-normal'>Tracking number:</span><div
-                                                                    className="float-end fw-semibold text-decoration-underline"
-                                                                    style={{ cursor: "pointer", position: "relative" }}
-                                                                    onClick={(e) => copyTrackingNumber(trackingNumber, e)}
-                                                                >
-                                                                    {trackingNumber}
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-all-orders" role="tabpanel" aria-labelledby="pills-all-orders-tab" tabindex="0">
+                                            <div className="all-orders">
+                                                <div className="row">
+                                                    {orders.map((order) => (
+                                                        <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
+                                                            <div className="all-order-container">
+                                                                <div className="fw-semibold order-number">
+                                                                    {order.transactionId}
                                                                 </div>
-                                                            </div>
-                                                            <div className="order-quantity fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
-                                                            </div>
-                                                            <div className="order-amount fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
-                                                            </div>
-                                                            <div className="d-flex justify-content-between">
-                                                                <div className="order-details">
-                                                                    {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
-                                                                    <button onClick={() => handleDetailBox(order)}>Details</button>
-                                                                    {/* )} */}
-                                                                    {/* {orderStatus === 'Processing' && (
+                                                                <div className="order-tracking">
+                                                                    <span className='text-secondary fw-normal'>Tracking number:</span><div
+                                                                        className="float-end fw-semibold text-decoration-underline"
+                                                                        style={{ cursor: "pointer", position: "relative" }}
+                                                                        onClick={(e) => copyTrackingNumber(trackingNumber, e)}
+                                                                    >
+                                                                        {trackingNumber}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="order-quantity fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
+                                                                </div>
+                                                                <div className="order-amount fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
+                                                                </div>
+                                                                <div className="d-flex justify-content-between">
+                                                                    <div className="order-details">
+                                                                        {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
+                                                                        <button onClick={() => handleDetailBox(order)}>Details</button>
+                                                                        {/* )} */}
+                                                                        {/* {orderStatus === 'Processing' && (
                                                                         <button onClick={handleRefund}>Refund / Return</button>
                                                                     )} */}
-                                                                </div>
-                                                                <div className='order-status mt-3'>
-                                                                    <div className={`text-success fw-semibold text-white 
+                                                                    </div>
+                                                                    <div className='order-status mt-3'>
+                                                                        <div className={`text-success fw-semibold text-white 
                                                             ${order.status === 'delivered' ? 'badge bg-success' : order.status === 'processing' ? 'badge bg-secondary' : 'badge bg-danger'}`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="tab-pane fade" id="pills-delivered" role="tabpanel" aria-labelledby="pills-delivered-tab" tabindex="0">
-                                        <div className="delivered-orders">
-                                            <div className="row">
-                                                {orders.filter(order => order.status === 'delivered').map((order) => (
-                                                    <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
-                                                        <div className="delivered-order-container">
-                                                            <div className="fw-semibold order-number">
-                                                                {order.transactionId}
-                                                            </div>
-                                                            <div className="order-tracking">
-                                                                <span className='text-secondary fw-normal'>Tracking number:</span><div
-                                                                    className="float-end fw-semibold text-decoration-underline"
-                                                                    style={{ cursor: "pointer", position: "relative" }}
-                                                                    onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
-                                                                    {trackingNumber}
+                                        <div class="tab-pane fade" id="pills-delivered" role="tabpanel" aria-labelledby="pills-delivered-tab" tabindex="0">
+                                            <div className="delivered-orders">
+                                                <div className="row">
+                                                    {orders.filter(order => order.status === 'delivered').map((order) => (
+                                                        <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
+                                                            <div className="delivered-order-container">
+                                                                <div className="fw-semibold order-number">
+                                                                    {order.transactionId}
                                                                 </div>
-                                                            </div>
-                                                            <div className="order-quantity fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
-                                                            </div>
-                                                            <div className="order-amount fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
-                                                            </div>
-                                                            <div className="d-flex justify-content-between">
-                                                                <div className="order-details">
-                                                                    {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
-                                                                    <button onClick={() => handleDetailBox(order)}>Details</button>
-                                                                    {/* )} */}
-                                                                    {/* {orderStatus === 'Processing' && (
+                                                                <div className="order-tracking">
+                                                                    <span className='text-secondary fw-normal'>Tracking number:</span><div
+                                                                        className="float-end fw-semibold text-decoration-underline"
+                                                                        style={{ cursor: "pointer", position: "relative" }}
+                                                                        onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
+                                                                        {trackingNumber}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="order-quantity fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
+                                                                </div>
+                                                                <div className="order-amount fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
+                                                                </div>
+                                                                <div className="d-flex justify-content-between">
+                                                                    <div className="order-details">
+                                                                        {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
+                                                                        <button onClick={() => handleDetailBox(order)}>Details</button>
+                                                                        {/* )} */}
+                                                                        {/* {orderStatus === 'Processing' && (
                                                                         <button onClick={handleRefund}>Refund / Return</button>
                                                                     )} */}
-                                                                </div>
-                                                                <div className='order-status mt-3'>
-                                                                    <div className={`text-success fw-semibold text-white badge bg-success`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
+                                                                    <div className='order-status mt-3'>
+                                                                        <div className={`text-success fw-semibold text-white badge bg-success`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="tab-pane fade" id="pills-processing" role="tabpanel" aria-labelledby="pills-processing-tab" tabindex="0">
-                                        <div className="processing-orders">
-                                            <div className="row">
-                                                {orders.filter(order => order.status === 'processing').map((order) => (
-                                                    <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
-                                                        <div className="processing-order-container">
-                                                            <div className="fw-semibold order-number">
-                                                                {order.transactionId}
-                                                            </div>
-                                                            <div className="order-tracking">
-                                                                <span className='text-secondary fw-normal'>Tracking number:</span><div
-                                                                    className="float-end fw-semibold text-decoration-underline"
-                                                                    style={{ cursor: "pointer", position: "relative" }}
-                                                                    onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
-                                                                    {trackingNumber}
+                                        <div class="tab-pane fade" id="pills-processing" role="tabpanel" aria-labelledby="pills-processing-tab" tabindex="0">
+                                            <div className="processing-orders">
+                                                <div className="row">
+                                                    {orders.filter(order => order.status === 'processing').map((order) => (
+                                                        <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
+                                                            <div className="processing-order-container">
+                                                                <div className="fw-semibold order-number">
+                                                                    {order.transactionId}
                                                                 </div>
-                                                            </div>
-                                                            <div className="order-quantity fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
-                                                            </div>
-                                                            <div className="order-amount fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
-                                                            </div>
-                                                            <div className="d-flex justify-content-between">
-                                                                <div className="order-details">
-                                                                    {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
-                                                                    <button onClick={() => handleDetailBox(order)}>Details</button>
-                                                                    {/* )} */}
-                                                                    {/* {orderStatus === 'Processing' && (
+                                                                <div className="order-tracking">
+                                                                    <span className='text-secondary fw-normal'>Tracking number:</span><div
+                                                                        className="float-end fw-semibold text-decoration-underline"
+                                                                        style={{ cursor: "pointer", position: "relative" }}
+                                                                        onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
+                                                                        {trackingNumber}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="order-quantity fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
+                                                                </div>
+                                                                <div className="order-amount fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
+                                                                </div>
+                                                                <div className="d-flex justify-content-between">
+                                                                    <div className="order-details">
+                                                                        {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
+                                                                        <button onClick={() => handleDetailBox(order)}>Details</button>
+                                                                        {/* )} */}
+                                                                        {/* {orderStatus === 'Processing' && (
                                                                         <button onClick={handleRefund}>Refund / Return</button>
                                                                     )} */}
-                                                                </div>
-                                                                <div className='order-status mt-3'>
-                                                                    <div className={`text-success fw-semibold text-white badge bg-secondary`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
+                                                                    <div className='order-status mt-3'>
+                                                                        <div className={`text-success fw-semibold text-white badge bg-secondary`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="tab-pane fade" id="pills-cancel" role="tabpanel" aria-labelledby="pills-cancel-tab" tabindex="0">
-                                        <div className="canceled-orders">
-                                            <div className="row">
-                                                {orders.filter(order => order.status === 'canceled').map((order) => (
-                                                    <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
-                                                        <div className="canceled-order-container">
-                                                            <div className="fw-semibold order-number">
-                                                                {order.transactionId}
-                                                            </div>
-                                                            <div className="order-tracking">
-                                                                <span className='text-secondary fw-normal'>Tracking number:</span><div
-                                                                    className="float-end fw-semibold text-decoration-underline"
-                                                                    style={{ cursor: "pointer", position: "relative" }}
-                                                                    onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
-                                                                    {trackingNumber}
+                                        <div class="tab-pane fade" id="pills-cancel" role="tabpanel" aria-labelledby="pills-cancel-tab" tabindex="0">
+                                            <div className="canceled-orders">
+                                                <div className="row">
+                                                    {orders.filter(order => order.status === 'canceled').map((order) => (
+                                                        <div className="col-12 col-lg-6 col-xl-4 mt-4 px-0 px-md-2">
+                                                            <div className="canceled-order-container">
+                                                                <div className="fw-semibold order-number">
+                                                                    {order.transactionId}
                                                                 </div>
-                                                            </div>
-                                                            <div className="order-quantity fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
-                                                            </div>
-                                                            <div className="order-amount fw-semibold">
-                                                                <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
-                                                            </div>
-                                                            <div className="d-flex justify-content-between">
-                                                                <div className="order-details">
-                                                                    {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
-                                                                    <button onClick={() => handleDetailBox(order)}>Details</button>
-                                                                    {/* )} */}
-                                                                    {/* {orderStatus === 'Processing' && (
+                                                                <div className="order-tracking">
+                                                                    <span className='text-secondary fw-normal'>Tracking number:</span><div
+                                                                        className="float-end fw-semibold text-decoration-underline"
+                                                                        style={{ cursor: "pointer", position: "relative" }}
+                                                                        onClick={(e) => copyTrackingNumber(trackingNumber, e)}>
+                                                                        {trackingNumber}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="order-quantity fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Quantity:</span>{order.quantity}
+                                                                </div>
+                                                                <div className="order-amount fw-semibold">
+                                                                    <span className='text-secondary fw-normal'>Total Amount:</span>${order.amount}
+                                                                </div>
+                                                                <div className="d-flex justify-content-between">
+                                                                    <div className="order-details">
+                                                                        {/* {(orderStatus === 'Delivered' || orderStatus === 'Canceled') && ( */}
+                                                                        <button onClick={() => handleDetailBox(order)}>Details</button>
+                                                                        {/* )} */}
+                                                                        {/* {orderStatus === 'Processing' && (
                                                                         <button onClick={handleRefund}>Refund / Return</button>
                                                                     )} */}
-                                                                </div>
-                                                                <div className='order-status mt-3'>
-                                                                    <div className={`text-success fw-semibold text-white badge bg-danger`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
+                                                                    <div className='order-status mt-3'>
+                                                                        <div className={`text-success fw-semibold text-white badge bg-danger`}><small className='fw-bold'>{order.status}</small></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        ) : (
+                            <div className="row align-content-center text-center" style={{ height: "80vh" }}>
+                                <div className="position-relative">
+                                    <h4 className='d-inline' style={{ fontFamily: "cursive" }}> <span>Good things are just a click away — grab your first product now!</span> <button className='btn btn-theme-outline py-1' onClick={handleNavigate}>buy a product!</button></h4>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

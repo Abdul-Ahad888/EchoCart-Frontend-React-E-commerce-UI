@@ -69,25 +69,23 @@ export default function Home() {
     <div>
 
       {loading && (
-        <div
-          className="modal show d-block position-absolute top-0 start-0"
-          style={{ backgroundColor: "#fff", zIndex: "99999999999" }}
-          tabIndex="-1"
-          role="dialog"
-        >
-          <div
-            className="spinner-border position-absolute start-50 z-3 border-5 top-50"
-            style={{
-              color: "#de7127",
-              height: "120px",
-              width: "120px",
-              translate: "-50% -50%",
-            }}
-            role="status"
-          >
-            <span className="visually-hidden">Loading...</span>
-          </div>
+        <div className="loader">
+        <div className="position-relative">
+            <h5 className="text-white z-3 position-absolute text-center shine-text"
+                style={{top: "130px", width: "1000px", transform: "translate(-50%, 0%)"}}>
+                EchoCart
+            </h5>
+            <figure className="iconLoaderProgress">
+                <svg className="iconLoaderProgressFirst" width="240" height="240">
+                    <circle cx="120" cy="120" r="100"></circle>
+                </svg>
+
+                <svg className="iconLoaderProgressSecond" width="240" height="240">
+                    <circle cx="120" cy="120" r="100"></circle>
+                </svg>
+            </figure>
         </div>
+    </div>
       )}
 
       <div className="container my-4">
@@ -103,19 +101,19 @@ export default function Home() {
             </div>
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img src={slider1} className="d-block img-fluid" alt="..." />
+                <img src={slider1} className="d-block" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src={slider2} className="d-block img-fluid" alt="..." />
+                <img src={slider2} className="d-block" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src={slider3} className="d-block img-fluid" alt="..." />
+                <img src={slider3} className="d-block" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src={slider4} className="d-block img-fluid" alt="..." />
+                <img src={slider4} className="d-block" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src={slider5} className="d-block img-fluid" alt="..." />
+                <img src={slider5} className="d-block" alt="..." />
               </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">

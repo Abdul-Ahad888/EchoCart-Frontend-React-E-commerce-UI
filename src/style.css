@@ -71,6 +71,148 @@ body::-webkit-scrollbar-thumb {
 }
 
 
+
+/* Main Loading  */
+
+.shine-text {
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+    background: linear-gradient(10deg, #e7e7e7, #000000, #e7e7e7);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+    0% {
+        background-position: -100%;
+    }
+
+    100% {
+        background-position: 200%;
+    }
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.loader.hide {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.iconLoaderProgress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-name: rotateLoader;
+}
+
+.iconLoaderProgress svg {
+    stroke-width: 16px;
+    fill: none;
+    transform-origin: center;
+    z-index: 999;
+}
+
+.iconLoaderProgressFirst circle,
+.iconLoaderProgressSecond circle,
+.iconLoaderProgressFirst,
+.iconLoaderProgressSecond {
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.iconLoaderProgressFirst circle,
+.iconLoaderProgressSecond circle {
+    animation-duration: 3s;
+    border-radius: 15px;
+}
+
+.iconLoaderProgressFirst,
+.iconLoaderProgressSecond {
+    position: absolute;
+    animation-duration: 6s;
+}
+
+.iconLoaderProgressFirst circle {
+    animation-name: circleFirst;
+    stroke-dasharray: 628, 628;
+    stroke-dashoffset: 0;
+    stroke: #de7127;
+    stroke-linecap: round;
+}
+
+.iconLoaderProgressSecond {
+    transform: rotate(-14deg);
+}
+
+.iconLoaderProgressSecond circle {
+    animation-name: circleSecond;
+    stroke-dasharray: 628, 628;
+    stroke-dashoffset: 0;
+    stroke: #311115;
+    stroke-linecap: round;
+}
+
+@keyframes circleFirst {
+
+    from,
+    to {
+        stroke-dashoffset: 50;
+    }
+
+    50% {
+        stroke-dashoffset: 625;
+    }
+}
+
+@keyframes circleSecond {
+
+    from,
+    to {
+        stroke-dashoffset: -625;
+    }
+
+    50% {
+        stroke-dashoffset: -50;
+    }
+}
+
+@keyframes rotateLoader {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
 /* Loading Spinners */
 
 .loadmore-spinner {
@@ -259,6 +401,28 @@ body::-webkit-scrollbar-thumb {
 
 
 /* Home */
+
+.carousel-item img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media screen and (max-width: 768px) {
+    .carousel-item img {
+        width: 100% !important;
+        height: 250px !important;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .carousel-item img {
+        width: 100% !important;
+        height: 180px !important;
+        object-fit: cover;
+    }
+}
+
 
 .cate-hori-scrl-box {
     overflow-x: auto;

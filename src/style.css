@@ -2397,7 +2397,7 @@ tr td:nth-child(5) {
 
 @keyframes side-bar-height-top-to-bottom {
     from {
-        top: -100%;
+        top: -120%;
     }
 
     to {
@@ -2411,7 +2411,7 @@ tr td:nth-child(5) {
     }
 
     to {
-        top: -100%;
+        top: -120%;
     }
 }
 
@@ -2458,7 +2458,7 @@ tr td:nth-child(5) {
         width: 100%;
         left: 0;
         z-index: 9998;
-        top: -100%;
+        top: -120%;
         transition: top 1s ease-in-out;
     }
 }
@@ -2506,7 +2506,7 @@ tr td:nth-child(5) {
         width: 100%;
         left: 0;
         z-index: 9998;
-        top: -100%;
+        top: -120%;
         transition: top 1s ease-in-out;
     }
 }
